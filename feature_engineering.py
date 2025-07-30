@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
-def load_data(path=r'C:\Users\hp\Desktop\House_price_prediction\data\Housing.csv'):
+def load_data(path=r'data\Housing.csv'):
     return pd.read_csv(path)
 
 def preprocess_data(df):
