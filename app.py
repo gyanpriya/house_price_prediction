@@ -11,7 +11,7 @@ st.set_page_config(page_title="House Price Dashboard", layout="wide")
 # Load data
 @st.cache_data
 def load_data():
-    return pd.read_csv(r"C:\Users\hp\Desktop\House_price_prediction\data\Housing.csv")
+    return pd.read_csv(r"data\Housing.csv")
 
 # Load model and preprocessor
 @st.cache_resource
