@@ -9,9 +9,24 @@ import pickle
 st.set_page_config(page_title="House Price Dashboard", layout="wide")
 
 # Load data
+import os
+
 @st.cache_data
 def load_data():
-    return pd.read_csv(r"data\Housing.csv")
+    if os.path.exists("data/Housing.csv"):
+        return pd.read_csv("data/Housing.csv")
+    else:
+        uploaded_file = st.file_uploader("Upload Housing.csv", type=["csv"])
+        if uploaded_file:
+            df = pd.read_csv(uploaded_file)
+            os.makedirs("data", exist_ok=True)
+            df.to_csv("data/Housing.csv", index=False)
+            st.success("File uploaded and saved!")
+            return df
+        else:
+            st.warning("Please upload Housing.csv to proceed.")
+            return pd.DataFrame()
+
 
 # Load model and preprocessor
 @st.cache_resource
@@ -49,12 +64,12 @@ if section == "🏠 EDA":
 
     st.subheader("Correlation Heatmap")
     fig2, ax2 = plt.subplots(figsize=(10,6))
-    sns.heatmap(df.corr(), annot=True, cmap='coolwarm', ax=ax2)
+    sns.histplot(df['price'], kde=True, ax=ax1, color="skyblue")
     st.pyplot(fig2)
 
     st.subheader("Scatter Plot: Area vs Price")
     fig3, ax3 = plt.subplots()
-    sns.scatterplot(data=df, x='area', y='price', hue='furnishingstatus', ax=ax3)
+    sns.histplot(df['price'], kde=True, ax=ax1, color="skyblue")
     st.pyplot(fig3)
 
 # -----------------------------
